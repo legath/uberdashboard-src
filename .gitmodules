@@ -4,3 +4,6 @@
 [submodule "ugfx"]
 	path = ugfx
 	url = https://bitbucket.org/Tectu/ugfx.git
+[submodule "HAL"]
+	path = HAL
+	url = https://github.com/legath/f4-hal.git

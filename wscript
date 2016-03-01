@@ -44,6 +44,7 @@ def build(bld):
     bld.program(
         source = ['app/main.cpp'],
         cxxflags = ['-std=c++11', '-O2', '-Wall', '-Werror'],
-        use    = 'scmrtos hal ugfx'
+        use    = 'scmrtos hal ugfx',
+        target = 'uberdashboard-fw.bin'
     )
     bld.add_post_fun(printSize)

@@ -21,14 +21,8 @@ def configure(ctx):
     ctx.env.LD = 'arm-none-eabi-ld'
     ctx.load('compiler_c')
     ctx.load('compiler_cxx')
-    ctx.env.append_value('CXXFLAGS', '-mcpu=cortex-m4')
-    ctx.env.append_value('CXXFLAGS', '-mthumb')
-    ctx.env.append_value('CXXFLAGS', '-mfloat-abi=hard')
-    ctx.env.append_value('CXXFLAGS', '-mfpu=fpv4-sp-d16')
-    ctx.env.append_value('CXXFLAGS', '-fmessage-length=0')
-    ctx.env.append_value('CXXFLAGS', '-fsigned-char')
-    ctx.env.append_value('CXXFLAGS', '-ffunction-sections')
-    ctx.env.append_value('CXXFLAGS', '-fdata-sections')
+    ctx.env.append_unique('CXXFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections'  ])
+    ctx.env.append_unique('FILES_HAL', ['HAL/Drivers/STM32F4xx_HAL_Driver/Src/*.c'])
 
 def printSize(ctx):
         print('Image size :')
@@ -40,7 +34,7 @@ def build(ctx):
                                 'scmrtos/port/cortex/mx-gcc/os_target.cpp'],
                 target = 'scmrtos')
     ctx.objects(
-                source = '',
+                source = ctx.path.ant_glob(ctx.env.FILES_HAL),
                 defines = ['STM32F429xx',
                                 'DATA_IN_ExtSDRAM'],
                 target = 'hal')

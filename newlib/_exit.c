@@ -6,17 +6,7 @@
 // ----------------------------------------------------------------------------
 
 #include <stdlib.h>
-#include "diag/Trace.h"
 
-// ----------------------------------------------------------------------------
-
-#if !defined(DEBUG)
-extern void
-__attribute__((noreturn))
-__reset_hardware(void);
-#endif
-
-// ----------------------------------------------------------------------------
 
 // Forward declaration
 
@@ -36,10 +26,6 @@ void
 __attribute__((weak))
 _exit(int code __attribute__((unused)))
 {
-#if !defined(DEBUG)
-  __reset_hardware();
-#endif
-
   // TODO: write on trace
   while (1)
     ;
@@ -51,8 +37,6 @@ void
 __attribute__((weak,noreturn))
 abort(void)
 {
-  trace_puts("abort(), exiting...");
-
   _exit(1);
 }
 

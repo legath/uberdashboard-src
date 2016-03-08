@@ -32,11 +32,16 @@ def build(ctx):
                 source = ['scmrtos/core/os_kernel.cpp',
                                 'scmrtos/core/os_services.cpp',
                                 'scmrtos/port/cortex/mx-gcc/os_target.cpp'],
+                includes = ['scmrtos/core',
+                            'scmrtos/port/cortex/mx-gcc',
+                            'conf'],
                 target = 'scmrtos')
     ctx.objects(
                 source = ctx.path.ant_glob(ctx.env.FILES_HAL),
                 defines = ['STM32F429xx',
                                 'DATA_IN_ExtSDRAM'],
+                includes = ['HAL/Drivers/STM32F4xx_HAL_Driver/Inc/',
+                            'conf'],
                 target = 'hal')
     ctx.objects(
                 source = '',
@@ -51,7 +56,7 @@ def build(ctx):
     ctx.program(
         source = ['app/main.cpp'],
         cxxflags = ['-std=c++11', '-O2', '-Wall', '-Werror'],
-        use    = 'scmrtos ugfx newlib',
+        use    = 'scmrtos hal newlib',
         target = 'uberdashboard-fw.elf'
     )
     ctx.add_post_fun(printSize)

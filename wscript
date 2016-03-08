@@ -35,6 +35,7 @@ def build(ctx):
                 includes = ['scmrtos/core',
                             'scmrtos/port/cortex/mx-gcc',
                             'conf'],
+                cxxflags = ['-std=c++11', '-O2'],
                 target = 'scmrtos')
     ctx.objects(
                 source = ctx.path.ant_glob(ctx.env.FILES_HAL),

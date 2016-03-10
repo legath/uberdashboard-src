@@ -323,3 +323,31 @@ void Default_Handler(void)
 {
 	for (;;);
 }
+
+#if defined(DEBUG)
+
+// The DEBUG version is not naked, but has a proper stack frame,
+// to allow setting breakpoints at Reset_Handler.
+void __attribute__ ((section(".after_vectors"),noreturn))
+Reset_Handler (void)
+{
+  _start ();
+}
+
+#else
+
+// The Release version is optimised to a quick branch to _start.
+void __attribute__ ((section(".after_vectors"),naked))
+Reset_Handler(void)
+  {
+    asm volatile
+    (
+        " ldr     r0,=_start \n"
+        " bx      r0"
+        :
+        :
+        :
+    );
+  }
+
+#endif

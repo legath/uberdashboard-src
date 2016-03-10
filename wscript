@@ -28,8 +28,8 @@ def configure(ctx):
     ctx.env.append_unique('CFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections'  ])
     ctx.env.append_unique('CXXFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections' ,'-fabi-version=0', '-fno-exceptions', '-fno-rtti', '-fno-use-cxa-atexit', '-fno-threadsafe-statics' ])
     ctx.env.append_unique('LDFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections' ,'-fabi-version=0', '-fno-exceptions', '-fno-rtti', '-fno-use-cxa-atexit', '-fno-threadsafe-statics' ])
-    ctx.env.append_unique('INCLUDES',['HAL/Drivers/STM32F4xx_HAL_Driver/Inc/', 'HAL/Drivers/CMSIS/Device/ST/STM32F4xx/Include/', 'HAL/Drivers/CMSIS/Include/', 'conf'])
-    ctx.env.append_unique('DEFINES',['STM32F429xx','DATA_IN_ExtSDRAM','HSE_VALUE=8000000'])
+    ctx.env.append_unique('INCLUDES',['HAL/Drivers/STM32F4xx_HAL_Driver/Inc/', 'HAL/Drivers/CMSIS/Device/ST/STM32F4xx/Include/', 'HAL/Drivers/CMSIS/Include/', 'scmrtos/core', 'scmrtos/port/cortex/mx-gcc' , 'conf'])
+    ctx.env.append_unique('DEFINES',['STM32F429xx','DATA_IN_ExtSDRAM','HSE_VALUE=8000000', 'USE_HAL_DRIVER'])
     if ctx.options.debug:
         ctx.env.append_unique('DEFINES',['DEBUG'])
     if ctx.options.usb_console:
@@ -39,9 +39,6 @@ def build(ctx):
     ctx.objects(
                 source = ctx.path.ant_glob('scmrtos/core/*.cpp')+
                                 [ 'scmrtos/port/cortex/mx-gcc/os_target.cpp'],
-                includes = ['scmrtos/core',
-                            'scmrtos/port/cortex/mx-gcc',
-                            'conf'],
                 cxxflags = ['-std=c++11', '-O2'],
                 target = 'scmrtos')
     ctx.objects(
@@ -51,7 +48,7 @@ def build(ctx):
                 source = '',
                 target = 'ugfx')
     ctx.objects(
-                source = ['newlib/_cxx.cpp',
+                source = [#'newlib/_cxx.cpp',
                                 'newlib/_exit.c',
                                 'newlib/_sbrk.c',
                                 'newlib/_startup.c',
@@ -66,4 +63,4 @@ def build(ctx):
         target = 'uberdashboard-fw.elf')
     ctx(rule='${OBJCOPY} -O ihex ${SRC} ${TGT}', source='uberdashboard-fw.elf', target='uberdashboard-fw.hex', name='objcopy')
     ctx(rule='${SIZE} --format=berkeley ${SRC}', source='uberdashboard-fw.elf', always=True, name='size')
-    ctx(rule='${SIZE} --format=sysv ${SRC}', source='uberdashboard-fw.elf', always=True, name='size')
+    ctx(rule='${SIZE} --format=sysv ${SRC}', source='uberdashboard-fw.elf', always=True, name='size_sysv')

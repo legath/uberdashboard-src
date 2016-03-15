@@ -20,10 +20,10 @@ def configure(ctx):
     ctx.env.CXX = 'arm-none-eabi-g++' #TODO: need to add logic for clang
     ctx.env.AR = 'arm-none-eabi-ar'
     ctx.env.LD = 'arm-none-eabi-ld'
+    ctx.env.OBJCOPY = 'arm-none-eabi-objcopy'
+    ctx.env.SIZE = 'arm-none-eabi-size'
     ctx.load('compiler_c')
     ctx.load('compiler_cxx')
-    ctx.find_program('objcopy', var='OBJCOPY')
-    ctx.find_program('size', var='SIZE')
     ctx.find_program('openocd', var='OPENOCD')
     ctx.env.append_unique('CFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections'  ])
     ctx.env.append_unique('CXXFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections' ,'-fabi-version=0', '-fno-exceptions', '-fno-rtti', '-fno-use-cxa-atexit', '-fno-threadsafe-statics' ])

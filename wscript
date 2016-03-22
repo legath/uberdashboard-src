@@ -36,11 +36,14 @@ def configure(ctx):
     ctx.find_program('openocd', var='OPENOCD')
 
     if ctx.options.use_clang:
-        ctx.env.append_unique('CFLAGS', ['-c','-target', 'arm-none-eabi' ])
-        ctx.env.append_unique('CXXFLAGS', ['-c','-target', 'arm-none-eabi' ])
+        ctx.env.append_unique('CFLAGS', ['-c','-target', 'arm-none-eabi','-mfloat-abi=soft' ])
+        ctx.env.append_unique('CXXFLAGS', ['-c','-target', 'arm-none-eabi','-mfloat-abi=soft' ])
+    else:
+        ctx.env.append_unique('CFLAGS', ['-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ])
+        ctx.env.append_unique('CXXFLAGS', ['-mfloat-abi=hard', '-mfpu=fpv4-sp-d16','-fabi-version=0' ])
 
-    ctx.env.append_unique('CFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections'  ])
-    ctx.env.append_unique('CXXFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections' ,'-fabi-version=0', '-fno-exceptions', '-fno-rtti', '-fno-use-cxa-atexit', '-fno-threadsafe-statics' ])
+    ctx.env.append_unique('CFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections'  ])
+    ctx.env.append_unique('CXXFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections' , '-fno-exceptions', '-fno-rtti', '-fno-use-cxa-atexit', '-fno-threadsafe-statics' ])
     ctx.env.append_unique('LDFLAGS', ['-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16' ,'-fmessage-length=0','-fsigned-char', '-ffunction-sections','-fdata-sections' ,'-fabi-version=0', '-fno-exceptions', '-fno-rtti', '-fno-use-cxa-atexit', '-fno-threadsafe-statics' ])
     ctx.env.append_unique('INCLUDES',['HAL/Drivers/STM32F4xx_HAL_Driver/Inc/', 'HAL/Drivers/CMSIS/Device/ST/STM32F4xx/Include/', 'HAL/Drivers/CMSIS/Include/', 'scmrtos/core', 'scmrtos/port/cortex/mx-gcc' , 'conf'])
     ctx.env.append_unique('DEFINES',['STM32F429xx','DATA_IN_ExtSDRAM','HSE_VALUE=8000000', 'USE_HAL_DRIVER'])

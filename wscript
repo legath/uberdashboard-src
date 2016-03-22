@@ -49,6 +49,11 @@ def configure(ctx):
     ctx.env.append_unique('DEFINES',['STM32F429xx','DATA_IN_ExtSDRAM','HSE_VALUE=8000000', 'USE_HAL_DRIVER'])
     if ctx.options.debug:
         ctx.env.append_unique('DEFINES',['DEBUG'])
+        ctx.env.append_unique('CFLAGS', ['-Og', '-g3', '-gdwarf-2', '-Wall' ])
+        ctx.env.append_unique('CXXFLAGS',['-Og', '-g3', '-gdwarf-2' ])
+    else:
+        ctx.env.append_unique('CFLAGS', ['-O2'])
+        ctx.env.append_unique('CXXFLAGS',['-O2'])
     if ctx.options.usb_console:
         ctx.env.append_unique('DEFINES',['USB_SHELL'])
 
@@ -56,7 +61,7 @@ def build(ctx):
     ctx.objects(
                 source = ctx.path.ant_glob('scmrtos/core/*.cpp')+
                                 [ 'scmrtos/port/cortex/mx-gcc/os_target.cpp'],
-                cxxflags = ['-std=c++11', '-O2'],
+                cxxflags = ['-std=c++11'],
                 target = 'scmrtos')
     ctx.objects(
                 source = ctx.path.ant_glob('HAL/Drivers/STM32F4xx_HAL_Driver/Src/*.c'),
@@ -74,7 +79,7 @@ def build(ctx):
     ctx.program(
         source = ['app/main.cpp']+
                         ctx.path.ant_glob('base/*.c'),
-        cxxflags = ['-std=c++11', '-O2', '-Wall'],
+        cxxflags = ['-std=c++11'],
         linkflags = ['-nostartfiles', '-T{0}'.format('../ldscripts/mem.ld'),'-T{0}'.format('../ldscripts/sections.ld'),'-Xlinker', '--gc-sections'],
         use    = 'scmrtos hal newlib',
         target = 'uberdashboard-fw.elf')

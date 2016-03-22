@@ -323,7 +323,7 @@ void Default_Handler(void)
 {
 	for (;;);
 }
-
+void _start (void);
 #if defined(DEBUG)
 
 // The DEBUG version is not naked, but has a proper stack frame,

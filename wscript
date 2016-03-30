@@ -67,7 +67,10 @@ def build(ctx):
                 source = ctx.path.ant_glob('HAL/Drivers/STM32F4xx_HAL_Driver/Src/*.c'),
                 target = 'hal')
     ctx.objects(
-                source = '',
+                source =[ 'ugfx/src/gfx_mk.c',
+                                'ugfx/drivers/gdisp/STM32LTDC/gdisp_lld_STM32LTDC.c'],
+                includes = ['ugfx',
+                                   'ugfx/drivers/gdisp/STM32LTDC'],
                 target = 'ugfx')
     ctx.objects(
                 source = [#'newlib/_cxx.cpp',

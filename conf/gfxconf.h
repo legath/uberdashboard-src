@@ -50,7 +50,7 @@
 //    #define GFX_CPU_ENDIAN                           GFX_CPU_ENDIAN_UNKNOWN
     #define GFX_OS_HEAP_SIZE                         0
 //    #define GFX_OS_NO_INIT                           FALSE
-//    #define GFX_OS_INIT_NO_WARNING                   FALSE
+    #define GFX_OS_INIT_NO_WARNING                   TRUE
 //    #define GFX_OS_PRE_INIT_FUNCTION                 myHardwareInitRoutine
 //    #define GFX_OS_EXTRA_INIT_FUNCTION               myOSInitRoutine
 //    #define GFX_OS_EXTRA_DEINIT_FUNCTION             myOSDeInitRoutine
@@ -265,7 +265,7 @@
 ///////////////////////////////////////////////////////////////////////////
 // GFILE                                                                 //
 ///////////////////////////////////////////////////////////////////////////
-//#define GFX_USE_GFILE                                FALSE
+#define GFX_USE_GFILE                                TRUE
 
 //#define GFILE_NEED_PRINTG                            FALSE
 //#define GFILE_NEED_SCANG                             FALSE

@@ -7,7 +7,11 @@
 
 #ifndef _GDISP_LLD_BOARD_H
 #define _GDISP_LLD_BOARD_H
+#include "stm32f429xx.h"
 
+
+#include <string.h>
+#define SDRAM_BANK_ADDR                 ((uint32_t)0xD0000000)
 static const ltdcConfig driverCfg = {
 	480, 272,								// Width, Height (pixels)
 	41, 10,									// Horizontal, Vertical sync (pixels)
@@ -17,7 +21,7 @@ static const ltdcConfig driverCfg = {
 	0x000000,								// Clear color (RGB888)
 
 	{										// Background layer config
-		(LLDCOLOR_TYPE *)SDRAM_DEVICE_ADDR,	// Frame buffer address
+		(LLDCOLOR_TYPE *)SDRAM_BANK_ADDR,	// Frame buffer address
 		480, 272,							// Width, Height (pixels)
 		480 * LTDC_PIXELBYTES,				// Line pitch (bytes)
 		LTDC_PIXELFORMAT,					// Pixel format

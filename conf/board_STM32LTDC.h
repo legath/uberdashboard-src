@@ -13,30 +13,28 @@
 #include <string.h>
 #define SDRAM_BANK_ADDR                 ((uint32_t)0xD0000000)
 static const ltdcConfig driverCfg = {
-	480, 272,								// Width, Height (pixels)
-	41, 10,									// Horizontal, Vertical sync (pixels)
-	13, 2,									// Horizontal, Vertical back porch (pixels)
-	32, 2,									// Horizontal, Vertical front porch (pixels)
-	0,										// Sync flags
-	0x000000,								// Clear color (RGB888)
-
-	{										// Background layer config
-		(LLDCOLOR_TYPE *)SDRAM_BANK_ADDR,	// Frame buffer address
-		480, 272,							// Width, Height (pixels)
-		480 * LTDC_PIXELBYTES,				// Line pitch (bytes)
-		LTDC_PIXELFORMAT,					// Pixel format
-		0, 0,								// Start pixel position (x, y)
-		480, 272,							// Size of virtual layer (cx, cy)
-		LTDC_COLOR_FUCHSIA,					// Default color (ARGB8888)
-		0x980088,							// Color key (RGB888)
-		LTDC_BLEND_FIX1_FIX2,				// Blending factors
-		0,									// Palette (RGB888, can be NULL)
-		0,									// Palette length
-		0xFF,								// Constant alpha factor
-		LTDC_LEF_ENABLE						// Layer configuration flags
+	240, 320,
+	10, 2,
+	20, 2,
+	10, 4,
+	0,
+	0x000000,
+	{
+		(LLDCOLOR_TYPE *)SDRAM_BANK_ADDR,	// frame
+		240, 320,							// width, height
+		240 * LTDC_PIXELBYTES,				// pitch
+		LTDC_PIXELFORMAT,					// fmt
+		0, 0,								// x, y
+		240, 320,							// cx, cy
+		LTDC_COLOR_FUCHSIA,					// defcolor
+		0x980088,							// keycolor
+		LTDC_BLEND_FIX1_FIX2,				// blending
+		0,									// palette
+		0,									// palettelen
+		0xFF,								// alpha
+		LTDC_LEF_ENABLE						// flags
 	},
-
-	LTDC_UNUSED_LAYER_CONFIG				// Foreground layer config
+	LTDC_UNUSED_LAYER_CONFIG
 };
 
 static GFXINLINE void init_board(GDisplay* g) {

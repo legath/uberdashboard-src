@@ -1,3 +1,15 @@
+# for build dir and waf tool
+build/
+waf
+
+# for projects that use Waf for building: http://code.google.com/p/waf/
+.waf-*
+.waf3-*
+.lock-*
+
+# for compiled python files
+*.pyc
+
 # Compiled Object files
 *.slo
 *.lo

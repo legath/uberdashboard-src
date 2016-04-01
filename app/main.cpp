@@ -10,28 +10,13 @@
 #include "stm32f4xx.h"
 #include <scmRTOS.h>
 
-typedef OS::process<OS::pr0, 300> TProc0;
-
-TProc0 Proc0;
+#include "processes.h"
+#include "gui_process.h"
 
 int main(void)
 {
-	
 	OS::run();
-
 }
-namespace OS
-{
-    template <>
-    OS_PROCESS void TProc0::exec()
-    {
-        for(;;)
-        {
-        	
-        }
-    }
-}
-
 
 extern "C" uint32_t HAL_GetTick(void)
 {

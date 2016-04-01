@@ -38,3 +38,10 @@ waf
 *.exe
 *.out
 *.app
+
+
+# eclipse files
+.cproject
+.project
+.pydevproject
+

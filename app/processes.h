@@ -8,11 +8,8 @@
 #define PROCESSES_H
 
 #include <scmRTOS.h>
+typedef OS::process<OS::pr0, 300> GuiProc; // процесс для GUI
+//typedef OS::process<OS::pr1, 300> ...Proc; // процесс для ...
 
-namespace OS
-{
-	typedef OS::process<OS::pr0, 300> GuiProc; // процесс для GUI
-	//typedef OS::process<OS::pr1, 300> ...Proc; // процесс для ...
-}
 
 #endif // PROCESSES_H

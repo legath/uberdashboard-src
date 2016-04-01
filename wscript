@@ -82,7 +82,7 @@ def build(ctx):
     ctx.program(
         source =ctx.path.ant_glob('app/*.cpp')+
                         ctx.path.ant_glob('base/*.c'),
-        includes = 'app',
+        includes = ['app'],
         cxxflags = ['-std=c++11'],
         linkflags = ['-nostartfiles', '-T{0}'.format('../ldscripts/mem.ld'),'-T{0}'.format('../ldscripts/sections.ld'),'-Xlinker', '--gc-sections'],
         use    = 'scmrtos hal newlib',
